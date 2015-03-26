@@ -1,0 +1,32 @@
+HTTP/1.1 200 OK
+
+<!DOCTYPE html><html version="HTML+RDFa 1.1" xmlns="http://www.w3.org/1999/xhtml" xmlns:typo3="http://www.typo3.org/ns/2012/Flow/Packages/Neos/Content/" xmlns:xsd="http://www.w3.org/2001/XMLSchema#"><!--
+	This website is powered by TYPO3 Neos, the next generation CMS, a free Open
+	Source Enterprise Content Management System licensed under the GNU/GPL.
+
+	TYPO3 Neos is based on Flow, a powerful PHP application framework licensed under the GNU/LGPL.
+
+	More information and contribution opportunities at http://neos.typo3.org and http://flow.typo3.org
+--><head><meta charset="UTF-8" /><title>Home</title>
+		<!-- Put your scripts inclusions for the head here, they will be included in your website by TypoScript -->
+		<script src="http://lestilleuls.local.com/_Resources/Static/Packages/Gc.Tilleuls/js/components/modernizr.custom.js" type="text/javascript"></script>
+		<script src="http://lestilleuls.local.com/_Resources/Static/Packages/Gc.Tilleuls/js/components/jquery.min.js" type="text/javascript"></script>
+	
+		<link rel="stylesheet" href="http://lestilleuls.local.com/_Resources/Static/Packages/Gc.Tilleuls/css/main.css" media="all" />
+	eval=page<TYPO3.Neos:Page>/head<TYPO3.TypoScript:Array>/neosBackendHeader{"node":{"type":"TYPO3\\TYPO3CR\\Domain\\Model\\Node","value":"\/sites\/tilleuls@user-gcopin"}}eval=page<TYPO3.Neos:Page>/head<TYPO3.TypoScript:Array>/neosBackendEndpoints{"node":{"type":"TYPO3\\TYPO3CR\\Domain\\Model\\Node","value":"\/sites\/tilleuls@user-gcopin"},"account":{"type":"TYPO3\\Flow\\Security\\Account","value":"5e7ab7a4-b6a0-39f6-53ec-134cfc3c980d"}}</head><body><div typeof="typo3:TYPO3.Neos.NodeTypes:Page" about="/sites/tilleuls@user-gcopin" data-neos-site-name="Tilleuls" data-neos-site-node-context-path="/sites/tilleuls@user-gcopin" data-neos-context-workspace-name="user-gcopin" data-neos-context-dimensions="[]" data-node-_identifier="ec6213d9-4651-332e-f267-c45135a12789" data-node-__workspace-name="live" data-node-__typoscript-path="page&lt;TYPO3.Neos:Page&gt;/neosBackendDocumentNodeData" data-node-__parent-node-type="unstructured" data-node-_removed="false" data-nodedatatype-_removed="xsd:boolean" data-node-_hidden="false" data-nodedatatype-_hidden="xsd:boolean" data-node-_hidden-before-date-time="" data-nodedatatype-_hidden-before-date-time="xsd:date" data-node-_hidden-after-date-time="" data-nodedatatype-_hidden-after-date-time="xsd:date" data-node-_node-type="TYPO3.Neos.NodeTypes:Page" data-node-title="Home" data-node-uri-path-segment="home" data-node-_hidden-in-index="false" data-nodedatatype-_hidden-in-index="xsd:boolean" data-node-layout="" data-node-subpage-layout="" id="neos-document-metadata"></div>
+	<nav class="menu">
+		a99f0be774bb6bad962b1018a33e668a
+	</nav>
+	<div class="mainContent content">
+		c13cd2e7e3f1f5ce50ed8137cc94c7ff
+	</div>
+
+	<script src="http://lestilleuls.local.com/_Resources/Static/Packages/Gc.Tilleuls/js/base.js" type="text/javascript"></script>
+	<script src="http://lestilleuls.local.com/_Resources/Static/Packages/Gc.Tilleuls/js/main.js" type="text/javascript"></script>
+eval=page<TYPO3.Neos:Page>/neosBackendContainer{"node":{"type":"TYPO3\\TYPO3CR\\Domain\\Model\\Node","value":"\/sites\/tilleuls@user-gcopin"}}<script data-neos-node="ec6213d9-4651-332e-f267-c45135a12789" src="http://lestilleuls.local.com/_Resources/Static/Packages/TYPO3.Neos/JavaScript/LastVisitedNode.js"></script>
+
+	<script src="http://lestilleuls.local.com/_Resources/Static/Packages/TYPO3.Neos/Library/requirejs/require.js"></script>
+	
+			<script src="http://lestilleuls.local.com/_Resources/Static/Packages/TYPO3.Neos/JavaScript/ContentModule-built.js"></script>
+		
+</body></html>0             Node_ec6213d9-4651-332e-f267-c45135a127893707      

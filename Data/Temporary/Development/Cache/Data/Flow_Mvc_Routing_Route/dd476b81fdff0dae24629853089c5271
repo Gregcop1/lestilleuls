@@ -1,0 +1,1 @@
+a:5:{s:8:"@package";s:10:"TYPO3.Neos";s:7:"@action";s:5:"index";s:7:"@format";s:4:"html";s:11:"@controller";s:14:"Backend\Module";s:6:"module";a:3:{s:6:"module";s:23:"administration/packages";s:10:"controller";s:63:"\TYPO3\Neos\Controller\Module\Administration\PackagesController";s:6:"action";s:5:"index";}}0             308       

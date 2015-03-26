@@ -1,0 +1,1 @@
+a:1:{s:31:"TYPO3\TYPO3CR\Domain\Model\Node";a:1:{s:50:"TYPO3_TYPO3CR_Domain_Model_Node_NotInLiveWorkspace";a:1:{s:2:"&&";a:1:{i:0;a:3:{s:8:"operator";s:2:"!=";s:9:"leftValue";s:19:"this.workspace.name";s:10:"rightValue";s:6:"'live'";}}}}}0             238       

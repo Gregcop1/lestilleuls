@@ -1,0 +1,259 @@
+<?php 
+namespace TYPO3\Neos\Service\Controller;
+
+/*                                                                        *
+ * This script belongs to the TYPO3 Flow package "TYPO3.Neos".            *
+ *                                                                        *
+ * It is free software; you can redistribute it and/or modify it under    *
+ * the terms of the GNU General Public License, either version 3 of the   *
+ * License, or (at your option) any later version.                        *
+ *                                                                        *
+ * The TYPO3 project - inspiring people to share!                         *
+ *                                                                        */
+
+use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Flow\Exception as FlowException;
+use TYPO3\Flow\Http\Response as HttpResponse;
+use TYPO3\Flow\Mvc\Controller\ActionController;
+use TYPO3\Flow\Mvc\Exception\StopActionException;
+use TYPO3\Flow\Mvc\RequestInterface;
+use TYPO3\Flow\Mvc\ResponseInterface;
+
+/**
+ * Abstract Service Controller
+ */
+abstract class AbstractServiceController_Original extends ActionController {
+
+	/**
+	 * @var array
+	 */
+	protected $supportedMediaTypes = array('application/json');
+
+	/**
+	 * A preliminary error action for handling validation errors
+	 *
+	 * @return void
+	 */
+	public function errorAction() {
+		if ($this->arguments->getValidationResults()->hasErrors()) {
+			$errors = array();
+			foreach ($this->arguments->getValidationResults()->getFlattenedErrors() as $propertyName => $propertyErrors) {
+				foreach ($propertyErrors as $propertyError) {
+					/** @var \TYPO3\Flow\Error\Error $propertyError */
+					$error = array(
+						'severity' => $propertyError->getSeverity(),
+						'message' => $propertyError->render()
+					);
+					if ($propertyError->getCode()) {
+						$error['code'] = $propertyError->getCode();
+					}
+					if ($propertyError->getTitle()) {
+						$error['title'] = $propertyError->getTitle();
+					}
+					$errors[$propertyName][] = $error;
+				}
+			}
+			$this->throwStatus(409, NULL, json_encode($errors));
+		}
+		$this->throwStatus(400);
+	}
+
+	/**
+	 * Catch exceptions while processing an exception and respond to JSON format
+	 * TODO: This is an explicit exception handling that will be replaced by format-enabled exception handlers.
+	 *
+	 * @param RequestInterface $request The request object
+	 * @param ResponseInterface $response The response, modified by this handler
+	 * @return void
+	 * @throws \Exception
+	 */
+	public function processRequest(RequestInterface $request, ResponseInterface $response) {
+		try {
+			parent::processRequest($request, $response);
+		} catch (StopActionException $exception) {
+			throw $exception;
+		} catch (\Exception $exception) {
+			if ($this->request->getFormat() !== 'json' || !$response instanceof HttpResponse) {
+				throw $exception;
+			}
+			$exceptionData = $this->convertException($exception);
+			$response->setHeader('Content-Type', 'application/json');
+			if ($exception instanceof FlowException) {
+				$response->setStatus($exception->getStatusCode());
+			} else {
+				$response->setStatus(500);
+			 }
+			$response->setContent(json_encode(array('error' => $exceptionData)));
+			$this->systemLogger->logException($exception);
+		}
+	}
+
+	/**
+	 * @param \Exception $exception
+	 * @return array
+	 */
+	protected function convertException(\Exception $exception) {
+		$exceptionData = array(
+			'code' => $exception->getCode(),
+			'message' => $exception->getMessage(),
+		);
+		$splitMessagePattern = '/
+			(?<=                # Begin positive lookbehind.
+			  [.!?]\s           # Either an end of sentence punct,
+			| \n                # or line break
+			)
+			(?<!                # Begin negative lookbehind.
+			  i\.E\.\s          # Skip "i.E."
+			)                   # End negative lookbehind.
+			/ix';
+		$sentences = preg_split($splitMessagePattern, $exception->getMessage(), 2, PREG_SPLIT_NO_EMPTY);
+		if (!isset($sentences[1])) {
+			$exceptionData['message'] = $exception->getMessage();
+		} else {
+			$exceptionData['message'] = trim($sentences[0]);
+			$exceptionData['details'] = trim($sentences[1]);
+		}
+		if ($exception instanceof FlowException) {
+			$exceptionData['referenceCode'] = $exception->getReferenceCode();
+		}
+		if ($exception->getPrevious() !== NULL) {
+			$exceptionData['previous'] = $this->convertException($exception->getPrevious());
+		}
+		return $exceptionData;
+	}
+}namespace TYPO3\Neos\Service\Controller;
+
+use Doctrine\ORM\Mapping as ORM;
+use TYPO3\Flow\Annotations as Flow;
+
+/**
+ * Abstract Service Controller
+ */
+abstract class AbstractServiceController extends AbstractServiceController_Original implements \TYPO3\Flow\Object\Proxy\ProxyInterface {
+
+	private $Flow_Aop_Proxy_targetMethodsAndGroupedAdvices = array();
+
+	private $Flow_Aop_Proxy_groupedAdviceChains = array();
+
+	private $Flow_Aop_Proxy_methodIsInAdviceMode = array();
+
+
+	/**
+	 * Autogenerated Proxy Method
+	 */
+	public function __construct() {
+
+		$this->Flow_Aop_Proxy_buildMethodsAndAdvicesArray();
+	}
+
+	/**
+	 * Autogenerated Proxy Method
+	 */
+	 protected function Flow_Aop_Proxy_buildMethodsAndAdvicesArray() {
+		if (method_exists(get_parent_class($this), 'Flow_Aop_Proxy_buildMethodsAndAdvicesArray') && is_callable('parent::Flow_Aop_Proxy_buildMethodsAndAdvicesArray')) parent::Flow_Aop_Proxy_buildMethodsAndAdvicesArray();
+
+		$objectManager = \TYPO3\Flow\Core\Bootstrap::$staticObjectManager;
+		$this->Flow_Aop_Proxy_targetMethodsAndGroupedAdvices = array(
+			'errorAction' => array(
+				'TYPO3\Flow\Aop\Advice\AroundAdvice' => array(
+					new \TYPO3\Flow\Aop\Advice\AroundAdvice('TYPO3\Flow\Security\Aspect\PolicyEnforcementAspect', 'enforcePolicy', $objectManager, NULL),
+				),
+			),
+		);
+	}
+
+	/**
+	 * Autogenerated Proxy Method
+	 */
+	 public function __wakeup() {
+
+		$this->Flow_Aop_Proxy_buildMethodsAndAdvicesArray();
+		$result = NULL;
+		if (method_exists(get_parent_class($this), '__wakeup') && is_callable('parent::__wakeup')) parent::__wakeup();
+		return $result;
+	}
+
+	/**
+	 * Autogenerated Proxy Method
+	 */
+	 public function Flow_Aop_Proxy_fixMethodsAndAdvicesArrayForDoctrineProxies() {
+		if (!isset($this->Flow_Aop_Proxy_targetMethodsAndGroupedAdvices) || empty($this->Flow_Aop_Proxy_targetMethodsAndGroupedAdvices)) {
+			$this->Flow_Aop_Proxy_buildMethodsAndAdvicesArray();
+			if (is_callable('parent::Flow_Aop_Proxy_fixMethodsAndAdvicesArrayForDoctrineProxies')) parent::Flow_Aop_Proxy_fixMethodsAndAdvicesArrayForDoctrineProxies();
+		}	}
+
+	/**
+	 * Autogenerated Proxy Method
+	 */
+	 public function Flow_Aop_Proxy_fixInjectedPropertiesForDoctrineProxies() {
+		if (!$this instanceof \Doctrine\ORM\Proxy\Proxy || isset($this->Flow_Proxy_injectProperties_fixInjectedPropertiesForDoctrineProxies)) {
+			return;
+		}
+		$this->Flow_Proxy_injectProperties_fixInjectedPropertiesForDoctrineProxies = TRUE;
+		if (is_callable(array($this, 'Flow_Proxy_injectProperties'))) {
+			$this->Flow_Proxy_injectProperties();
+		}	}
+
+	/**
+	 * Autogenerated Proxy Method
+	 */
+	 private function Flow_Aop_Proxy_getAdviceChains($methodName) {
+		$adviceChains = array();
+		if (isset($this->Flow_Aop_Proxy_groupedAdviceChains[$methodName])) {
+			$adviceChains = $this->Flow_Aop_Proxy_groupedAdviceChains[$methodName];
+		} else {
+			if (isset($this->Flow_Aop_Proxy_targetMethodsAndGroupedAdvices[$methodName])) {
+				$groupedAdvices = $this->Flow_Aop_Proxy_targetMethodsAndGroupedAdvices[$methodName];
+				if (isset($groupedAdvices['TYPO3\Flow\Aop\Advice\AroundAdvice'])) {
+					$this->Flow_Aop_Proxy_groupedAdviceChains[$methodName]['TYPO3\Flow\Aop\Advice\AroundAdvice'] = new \TYPO3\Flow\Aop\Advice\AdviceChain($groupedAdvices['TYPO3\Flow\Aop\Advice\AroundAdvice']);
+					$adviceChains = $this->Flow_Aop_Proxy_groupedAdviceChains[$methodName];
+				}
+			}
+		}
+		return $adviceChains;
+	}
+
+	/**
+	 * Autogenerated Proxy Method
+	 */
+	 public function Flow_Aop_Proxy_invokeJoinPoint(\TYPO3\Flow\Aop\JoinPointInterface $joinPoint) {
+		if (__CLASS__ !== $joinPoint->getClassName()) return parent::Flow_Aop_Proxy_invokeJoinPoint($joinPoint);
+		if (isset($this->Flow_Aop_Proxy_methodIsInAdviceMode[$joinPoint->getMethodName()])) {
+			return call_user_func_array(array('self', $joinPoint->getMethodName()), $joinPoint->getMethodArguments());
+		}
+	}
+
+	/**
+	 * Autogenerated Proxy Method
+	 * @return void
+	 */
+	 public function errorAction() {
+
+				// FIXME this can be removed again once Doctrine is fixed (see fixMethodsAndAdvicesArrayForDoctrineProxiesCode())
+			$this->Flow_Aop_Proxy_fixMethodsAndAdvicesArrayForDoctrineProxies();
+		if (isset($this->Flow_Aop_Proxy_methodIsInAdviceMode['errorAction'])) {
+		$result = parent::errorAction();
+
+		} else {
+			$this->Flow_Aop_Proxy_methodIsInAdviceMode['errorAction'] = TRUE;
+			try {
+			
+					$methodArguments = array();
+
+				$adviceChains = $this->Flow_Aop_Proxy_getAdviceChains('errorAction');
+				$adviceChain = $adviceChains['TYPO3\Flow\Aop\Advice\AroundAdvice'];
+				$adviceChain->rewind();
+				$joinPoint = new \TYPO3\Flow\Aop\JoinPoint($this, 'TYPO3\Neos\Service\Controller\AbstractServiceController', 'errorAction', $methodArguments, $adviceChain);
+				$result = $adviceChain->proceed($joinPoint);
+				$methodArguments = $joinPoint->getMethodArguments();
+
+			} catch (\Exception $e) {
+				unset($this->Flow_Aop_Proxy_methodIsInAdviceMode['errorAction']);
+				throw $e;
+			}
+			unset($this->Flow_Aop_Proxy_methodIsInAdviceMode['errorAction']);
+		}
+		return $result;
+	}
+}
+#

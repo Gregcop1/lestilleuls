@@ -1,0 +1,12 @@
+
+TYPO3:
+  Flow:
+    core:
+      phpBinaryPathAndFilename: 'C:/wamp/bin/php/php5.5.12/php.exe'
+    persistence:
+      backendOptions:
+        driver: pdo_mysql
+        dbname: local_neos_lestilleuls
+        user: gcopin
+        password: 'ogerg4?A'
+        host: 127.0.0.1

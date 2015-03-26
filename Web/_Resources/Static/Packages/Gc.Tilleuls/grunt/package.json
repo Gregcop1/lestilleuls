@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "browser-sync": "*",
+    "glob": "*",
+    "grunt": "*",
+    "grunt-autoprefixer": "*",
+    "grunt-concurrent": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-coffee": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-sass": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-newer": "*",
+    "grunt-notify": "*",
+    "jquery": "^2.1.3",
+    "load-grunt-tasks": "*"
+  }
+}

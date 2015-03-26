@@ -1,0 +1,11 @@
+// # modules: the site elements
+
+// Use class `page` to set the max-width of the website
+.page { @include page; }
+
+// ## Navigation
+.nav { @include nav; }
+
+// ## mainContent
+.mainContent { opacity: 0; transition: opacity 3000ms linear; }
+.js .mainContent { opacity: 1; }
